@@ -1,5 +1,6 @@
 #0200 binary_image
 import cv2 as cv
+import numpy as np
 
 img_color = cv.imread('./data/box_small.png', cv.IMREAD_COLOR)
 img_gray = cv.cvtColor(img_color, cv.COLOR_BGR2GRAY)
@@ -9,6 +10,11 @@ print("img value: ", img_color)
 print("type(img): ", type(img_color))
 print("img.shape: ", img_color.shape)
 cv.waitKey(0)
+
+# src = np.array([[0, 0, 255, 0],
+#                 [0, 0, 255, 0],
+#                 [0, 0, 255, 0],
+#                 [0, 0, 255, 0]], dtype=np.uint8)
 
 height,width = img_binary.shape[:2]
 
