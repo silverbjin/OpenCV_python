@@ -26,10 +26,17 @@ print("dists=", dists)
 #3
 nx = 3 
 ny = 3   
-aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
-board = cv2.aruco.CharucoBoard_create(squaresX=nx, squaresY=ny, 
-                                      squareLength=0.04, markerLength=0.02, 
-                                      dictionary=aruco_dict)
+# aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
+aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)     # for cv2==4.13
+# board = cv2.aruco.CharucoBoard_create(squaresX=nx, squaresY=ny, 
+#                                       squareLength=0.04, markerLength=0.02, 
+#                                       dictionary=aruco_dict)
+board = cv2.aruco.CharucoBoard(         # for cv2==4.13
+    size=(nx, ny),
+    squareLength=0.04, 
+    markerLength=0.02, 
+    dictionary=aruco_dict    
+)
 #4: 
 t = 0 # frame counter
 while True:
@@ -62,14 +69,17 @@ while True:
           cv2.aruco.drawDetectedCornersCharuco(frame, charucoCorners)
           ret, rvec, tvec = cv2.aruco.estimatePoseCharucoBoard(charucoCorners, charucoIds,
                                                                board, K, dists, None, None)
-          cv2.aruco.drawAxis(frame, K, dists, rvec, tvec, 0.1)
+          # cv2.aruco.drawAxis(frame, K, dists, rvec, tvec, 0.1)
+          cv2.drawFrameAxes(frame, K, dists, rvec, tvec, 0.1)
+          
      else:
           print("charucoCorners are not found enough!!!")
  
 #4-5: markers' pos: rvecs, tvecs
      rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, 0.05, K, dists)        
      for i in range(rvecs.shape[0]):
-            cv2.aruco.drawAxis(frame, K, dists, rvecs[i, :, :], tvecs[i, :, :], 0.03)      
+          #   cv2.aruco.drawAxis(frame, K, dists, rvecs[i, :, :], tvecs[i, :, :], 0.03)      
+            cv2.drawFrameAxes(frame, K, dists, rvecs[i, :, :], tvecs[i, :, :], 0.03)
 #4-6
      print("t=", t)
      t += 1

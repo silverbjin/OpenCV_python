@@ -2,6 +2,8 @@
 #https://github.com/francoisruty/fruty_opencv-opengl-projection-matrix/blob/master/test.py
 #https://strawlab.org/2011/11/05/augmented-reality-with-OpenGL/
 
+# pip install PyOpenGL PyOpenGL_accelerate
+
 import cv2
 import numpy as np
 from OpenGL.GL import *
@@ -264,7 +266,10 @@ def main():
     glutInit()
     glutInitDisplayMode(GLUT_RGBA|GLUT_DOUBLE|GLUT_DEPTH)
     glutInitWindowSize(640, 480)
-    win_id=glutCreateWindow("Augmented Reality: GLUT, OpenGL and OpenCV")
+    # win_id=glutCreateWindow("Augmented Reality: GLUT, OpenGL and OpenCV") 
+    # win_id = glutCreateWindow(b"Augmented Reality: GLUT, OpenGL and OpenCV") # for cv2==4.13
+    win_id = glutCreateWindow("Augmented Reality: GLUT, OpenGL and OpenCV".encode("ascii")) # for cv2==4.13
+
 
     background_texture = initGL()
     glutDisplayFunc(displayFun)

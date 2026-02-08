@@ -8,11 +8,13 @@ select = 1 # 2
 if select == 1:
     nx, ny  = 3, 3
     img = cv2.imread("./data/charuco_6x6_250.png")
-    aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250) 
+    # aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250) 
+    aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)      # for cv2==4.13
 else:
     nx, ny  = 4, 7
     img = cv2.imread("./data/charuco_5x5_1000.png")
-    aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_5X5_1000)
+    # aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_5X5_1000)
+    aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_5X5_1000)     # for cv2==4.13
     
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
@@ -33,8 +35,14 @@ img_markers = cv2.aruco.drawDetectedMarkers(img.copy(), corners, ids)
 
 #3: detect board corners
 #3-1
-board = cv2.aruco.CharucoBoard_create(squaresX=nx, squaresY=ny, 
-                  squareLength=0.04, markerLength=0.02, dictionary=aruco_dict)
+# board = cv2.aruco.CharucoBoard_create(squaresX=nx, squaresY=ny, 
+                #   squareLength=0.04, markerLength=0.02, dictionary=aruco_dict)
+board = cv2.aruco.CharucoBoard(     # for cv2==4.13
+    size=(nx, ny),
+    squareLength=0.04, 
+    markerLength=0.02, 
+    dictionary=aruco_dict    
+)
 corners, ids, _, _=cv2.aruco.refineDetectedMarkers(gray, board, corners, ids, rejected)
 
 #3-2

@@ -3,6 +3,10 @@
 # Objfile loader    :  objloader.py
 # Wavefront OBJ file:         ./data/cube.obj
 # material template library:  ./data/cube.mtl
+
+# pip install pygame
+
+
 import cv2
 import numpy as np
 np.set_printoptions(precision=2, suppress=True)
@@ -148,7 +152,7 @@ def drawCube(bottomFill=True):
     if bottomFill:
         glBegin(GL_QUADS)
     else:
-        glBegin(GL_LINE_LOOP) 
+        glBegin(GL_LINE_LOOP)
     glColor3f(1.0,1.0,0.0)
     for i in range(4):
         glVertex3fv(pts0[i])
@@ -173,7 +177,7 @@ def displayAxesCube(view_matrix):
     axis3d = np.float32([[0,0,0], [3,0,0],
                          [0,3,0], [0,0,-3]]).reshape(-1,3)
 
-    glMatrixMode(GL_MODELVIEW)    
+    glMatrixMode(GL_MODELVIEW)
     glPushMatrix()
     glLoadTransposeMatrixd(view_matrix)
     

@@ -7,7 +7,8 @@ img = cv2.imread("./data/aruco_6x6.png") # "./data/aruco_5x5.png"
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 #2
-aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250) #cv2.aruco.DICT_5X5_250
+# aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250) #cv2.aruco.DICT_5X5_250
+aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)  # for cv2==4.13
 #param  = cv2.aruco.DetectorParameters_create()
 
 corners, ids, rejected = cv2.aruco.detectMarkers(gray, aruco_dict)#, parameters=param)

@@ -16,13 +16,20 @@ height, width = (int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)),
 imageSize = width, height
       
 #2
-aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
+# aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
+aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)     # for cv2==4.13
 nx = 2 
 ny = 2   
-board = cv2.aruco.GridBoard_create(nx, ny,
-                                   markerLength=1.0,
-                                   markerSeparation= 0.1,
-                                   dictionary = aruco_dict, firstMarker=0)
+# board = cv2.aruco.GridBoard_create(nx, ny,
+#                                    markerLength=1.0,
+#                                    markerSeparation= 0.1,
+#                                    dictionary = aruco_dict, firstMarker=0)
+board = cv2.aruco.GridBoard(       # for cv2==4.13
+    size=(nx, ny),
+    markerLength=1.0,
+    markerSeparation=0.1,
+    dictionary=aruco_dict
+    )
 
 #3: calibrate K, dists using calibrateCameraAruco()
 t = 0

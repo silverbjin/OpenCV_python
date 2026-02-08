@@ -17,11 +17,18 @@ imageSize = width, height
     
    
 #2
-aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
+# aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_6X6_250)
+aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)     # for cv2==4.13
 nx = 3 
 ny = 3   
-board = cv2.aruco.CharucoBoard_create(squaresX=nx, squaresY=ny, 
-                 squareLength=0.04, markerLength=0.02, dictionary=aruco_dict)
+# board = cv2.aruco.CharucoBoard_create(squaresX=nx, squaresY=ny, 
+#                  squareLength=0.04, markerLength=0.02, dictionary=aruco_dict)
+board = cv2.aruco.CharucoBoard(         # for cv2==4.13
+    size=(nx, ny),
+    squareLength=0.04, 
+    markerLength=0.02, 
+    dictionary=aruco_dict    
+)
 
 #3: calibrate K, dists using calibrateCameraCharuco()
 t = 0
@@ -70,7 +77,7 @@ while True:
      if key == 27:  break
           
 #3-5
-errs, K, dists, rvecs, tvecs =	cv2.aruco.calibrateCameraCharuco(all_corners, all_ids,
+errs, K, dists, rvecs, tvecs =     cv2.aruco.calibrateCameraCharuco(all_corners, all_ids,
                                                                  board, imageSize, None, None)
                                                                                                
 np.savez('./data/calib_1123.npz', K=K, dists= dists)
